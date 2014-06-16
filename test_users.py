@@ -1,19 +1,19 @@
 # test.py
-    
-    
+
+
 import os
 import unittest
-    
+
 from app import app, db
 from app.models import User, FTasks
 from config import basedir
 
 from datetime import datetime, date
-    
+
 TEST_DB = 'test.db'
-    
+
 class UserTests(unittest.TestCase):
-    
+
     # setup db and teardown
     def setUp(self):
         app.config['TESTING'] = True
@@ -21,7 +21,7 @@ class UserTests(unittest.TestCase):
                 os.path.join(basedir, TEST_DB)
         self.app = app.test_client()
         db.create_all()
-    
+
     def tearDown(self):
         db.drop_all()
 
@@ -67,11 +67,11 @@ class UserTests(unittest.TestCase):
 
     def test_loggedin_users_can_access_tasks(self):
         self.create_user()
-        self.login('mherman','michaelherman')   
+        self.login('mherman','michaelherman')
         response = self.app.get('tasks/tasks/',follow_redirects=True)
         assert 'Add a new task:' in response.data
 
-    def test_not_logggedin_users_cannot_access_tasks(self):  
+    def test_not_logggedin_users_cannot_access_tasks(self):
         response = self.app.get('tasks/tasks/',follow_redirects=True)
         assert 'You need to login first.' in response.data
 
@@ -85,7 +85,7 @@ class UserTests(unittest.TestCase):
         self.register()
         self.app.get('users/register/',follow_redirects=True)
         response = self.register()
-        assert 'Oh no! That username and/or email already exist. Please try again.' in response.data
+        assert 'Username and/or email already exists.' in response.data
 
     def test_404_error(self):
         response = self.app.get('/xxxxxxxxx/',follow_redirects=True)

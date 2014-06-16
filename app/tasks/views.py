@@ -30,7 +30,7 @@ def new_task():
             session['user_id'])
         db.session.add(new_task)
         db.session.commit()
-        flash("New enrty was successfully added. Thanks.")
+        flash('New entry was successfully added. Thanks.')
     else:
         flash_errors(form)
     return redirect(url_for('.tasks'))
@@ -52,5 +52,5 @@ def delete_entry(task_id):
     new_id = task_id
     db.session.query(FTasks).filter_by(task_id=new_id).delete()
     db.session.commit()
-    flash('the task was deleted.')
+    flash('The task was deleted.')
     return redirect(url_for('.tasks'))

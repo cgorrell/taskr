@@ -12,7 +12,7 @@ mod = Blueprint('users', __name__, url_prefix='/users', template_folder="templat
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
-    flash('You logged out. Bye.')
+    flash('You are logged out. Bye. :(')
     return redirect(url_for('.login'))
 
 
@@ -27,7 +27,7 @@ def login():
         else:
             session['logged_in'] = True
             session['user_id'] = u.id
-            flash('You\'re all logged in. Go Crazy.')
+            flash('You are logged in. Go Crazy.')
             return redirect(url_for('tasks.tasks'))
     return render_template('/users/login.html', form=LoginForm(request.form), error=error)
 
@@ -44,7 +44,7 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash('Thanks for registering. Please login')
+            flash('Thanks for registering. Please login.')
             return redirect(url_for('.login'))
         except IntegrityError:
             error = 'Username and/or email already exists.'
